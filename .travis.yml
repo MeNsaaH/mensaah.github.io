@@ -1,7 +1,6 @@
 # Build the website
 script:
-  - mkdir public
-  - cp -r  ./* public/
+  - rsync -avr --exclude='public' ./* public
 
 # Deploy to GitHub pages
 deploy:

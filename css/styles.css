@@ -433,7 +433,8 @@ footer {
   margin: 0 auto 30px auto;
   padding: 15px;
   border: 1px solid #dcd9d9;
-  text-align: left; }
+  text-align: left;
+  background: #fff; }
   .education-block h3 {
     font-weight: 500;
     float: left;

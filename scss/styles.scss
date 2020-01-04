@@ -34,7 +34,7 @@
 */
 
 // Define base and accent colors
-$base-color: #3498db;
+$base-color: #151c21;
 $base-color-hover: darken($base-color, 10%);
 
 // Define background colors
@@ -307,6 +307,13 @@ footer {
     }
 }
 
+.btn-center {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 .shadow {
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
@@ -346,6 +353,9 @@ footer {
 */
 
 #lead {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
     position: relative;
     height: 100vh;
     min-height: 500px;
@@ -357,12 +367,9 @@ footer {
 }
 
 #lead-content {
-    position: absolute;
     z-index: 10;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     text-align: center;
+    flex: 1;
 
     h1, h2 {
         margin: 0;
@@ -382,6 +389,11 @@ footer {
         font-weight: 500;
         font-size: 2.25em;
         margin-bottom: 15px;
+    }
+
+    img {
+        border-radius: 15%;
+        max-height: 300px;
     }
 }
 
@@ -873,18 +885,20 @@ footer {
 // Medium Devices
 @media only screen and (max-width : 992px) {
 
+    .btn-center {
+        bottom: 5%;
+    }
+
     #lead {
         height: auto;
         min-height: auto;
         max-height: auto;
         padding: 100px 15px;
+        flex-direction: column;
     }
 
     #lead-content {
-        position: relative;
-        transform: none;
-        left: auto;
-        top: auto;
+        padding: 10px;
 
         h1 {
             font-size: 3em;
@@ -945,6 +959,11 @@ footer {
 
         a {
             padding: 10px 20px;
+        }
+
+        img {
+            border-radius: 10px;
+            max-height: 200px;
         }
     }
 

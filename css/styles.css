@@ -336,6 +336,8 @@ footer {
   border-bottom: 1px solid #dcd9d9; }
   #experience h2 {
     color: #374054; }
+  #experience li {
+    margin: 5px; }
 
 #experience-timeline {
   margin: 30px auto 0 auto;

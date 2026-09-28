@@ -1,7 +1,7 @@
 # Portfolio redesign and blog: design
 
 Date: 2026-09-29
-Status: approved in conversation, awaiting written review
+Status: approved
 Branch: `redesign`
 
 ## Goal
@@ -268,6 +268,9 @@ public/
   favicon.ico
   robots.txt
 .github/workflows/deploy.yml
+.claude/skills/
+  add-role/SKILL.md
+  add-blog-post/SKILL.md
 ```
 
 ### Components
@@ -291,6 +294,22 @@ public/
 Content lives in `src/data` and `src/content`, never inside components, so
 updating a role or a project is a data edit.
 
+### Single source of truth
+
+Each fact is stored once and everything else derives from it, so the
+maintenance skills below have few places to touch.
+
+| Fact | Stored in | Derived consumers |
+|---|---|---|
+| Current role and company | The entry in `experience.ts` with no end date | Telemetry "Active deployment", palette `whoami`, deploy log status |
+| Hero title and summary | `site.ts` | Hero, page meta description, palette `whoami` |
+| Runtime and orchestration cells | `site.ts` | Telemetry |
+| Posts | Files in `src/content/blog/` | Blog list, tag pages, RSS, sitemap, home latest-post row, palette index, previous/next links |
+
+A role's status is not stored: an entry without an end date is Active, any
+other is Retired. `experience.ts` must contain at most one entry without an
+end date, and a unit test enforces that.
+
 ### Removed
 
 `index.html`, `css/`, `js/`, `scss/`, `libs/`, `gulpfile.js`, the old
@@ -298,6 +317,58 @@ updating a role or a project is a data edit.
 `images/project.jpg`. Project images move to `src/assets/projects/`.
 `README.md` is rewritten to cover local development and how to write a post.
 `LICENSE.md` stays.
+
+## Maintenance skills
+
+Two Claude Code project skills are committed in the repository, so either can
+be run in a later session by name or by describing the task.
+
+| Skill | File |
+|---|---|
+| `add-role` | `.claude/skills/add-role/SKILL.md` |
+| `add-blog-post` | `.claude/skills/add-blog-post/SKILL.md` |
+
+Both skills are written after the site is built, so they describe the real
+files. Both end by running the unit tests and a production build, and by
+reporting what changed. Neither commits or pushes unless asked.
+
+### `add-role`
+
+Adds a new job to the site and updates everything that depends on it.
+
+1. Collect: company, role title, start date, whether it is the current role,
+   end date if not, and bullets. Ask for anything missing; do not invent
+   bullets.
+2. Add the entry to `experience.ts` in date order with the next version
+   number (the role after v3.0 is v4.0).
+3. If the new role is current, set the end date on the previously current
+   role, which makes it Retired.
+4. Ask whether the hero title or summary in `site.ts` should change, and
+   whether the Runtime and Orchestration cells still reflect the stack.
+5. Ask whether the role introduces tools to add to `skills.ts`.
+6. Remind the owner to update the resume document if the link target is
+   stale.
+7. Run tests and build, then list every file changed.
+
+### `add-blog-post`
+
+Creates a post and confirms every place it should appear.
+
+1. Collect: title, one-sentence description, tags, and whether it starts as
+   a draft. Derive the slug from the title in lowercase kebab case and
+   confirm it is unused.
+2. Create `src/content/blog/<slug>.md` with complete front matter and
+   today's date. Reuse existing tags where one fits, to avoid near-duplicates
+   such as `k8s` and `kubernetes`.
+3. Write the body from the owner's notes or outline when given; otherwise
+   leave a section skeleton. Do not publish invented content under the
+   owner's name.
+4. Put images in `src/assets/blog/<slug>/` and reference them with relative
+   paths.
+5. Run tests and build. Confirm the post appears in the blog list, its tag
+   pages, the RSS feed and the home latest-post row, or in none of them if
+   it is a draft.
+6. Report the local preview URL and the file path.
 
 ## Deployment
 
@@ -323,8 +394,12 @@ updating a role or a project is a data edit.
 
 ## Testing
 
-- **Unit (vitest):** `reading-time.ts`, `uptime.ts`, and the draft filtering
-  and sorting in `posts.ts`. Written test-first.
+- **Unit (vitest):** `reading-time.ts`, `uptime.ts`, the draft filtering
+  and sorting in `posts.ts`, and the rule that `experience.ts` has at most one
+  current role. Written test-first.
+- **Skills:** each skill is exercised once on a scratch branch (a sample role,
+  a sample post), the result is checked in the browser, and the scratch
+  changes are discarded.
 - **Build:** `astro check` and `astro build` pass with no errors.
 - **Browser, against the built site:** every route in light and dark mode at
   1280px and 375px; theme toggle persists across reload; palette opens, filters

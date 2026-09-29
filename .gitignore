@@ -1,4 +1,6 @@
 node_modules/
-.sass-cache
+dist/
+.astro/
 .superpowers/
 .playwright-mcp/
+.DS_Store

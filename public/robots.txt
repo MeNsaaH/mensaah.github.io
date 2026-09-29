@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mensaah.me/sitemap-index.xml

@@ -1,0 +1,82 @@
+---
+import { site } from '../data/site';
+
+const year = new Date().getUTCFullYear();
+---
+
+<footer class="footer">
+  <div class="wrap inner">
+    <p class="label">Copyright &copy; {year} {site.name}</p>
+
+    <ul class="links">
+      {
+        site.socials.map((social) => (
+          <li>
+            <a href={social.href} rel="me noopener" target="_blank">{social.label}</a>
+          </li>
+        ))
+      }
+      <li><a href="/rss.xml">RSS</a></li>
+      <li><a href="/#say-hi">Say hi</a></li>
+    </ul>
+
+    <button class="hint label" type="button" data-palette-open hidden>
+      Press <kbd>/</kbd> for commands
+    </button>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    margin-top: 40px;
+    border-top: 2px solid var(--ink);
+    background: var(--panel);
+  }
+
+  .inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px 28px;
+    padding-block: 22px;
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .links a {
+    color: var(--ink);
+  }
+
+  .links a:hover {
+    color: var(--accent-text);
+  }
+
+  .hint {
+    padding: 6px 10px;
+    border: 1px solid var(--rule);
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .hint:hover {
+    border-color: var(--ink);
+    color: var(--ink);
+  }
+
+  kbd {
+    padding: 0 5px;
+    border: 1px solid var(--rule);
+    background: var(--paper);
+    color: var(--ink);
+    font-family: inherit;
+  }
+</style>

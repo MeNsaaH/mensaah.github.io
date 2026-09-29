@@ -1,12 +1,11 @@
 ---
+import { site } from '../data/site';
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Manasseh Mmadu</title>
-  </head>
-  <body>
-    <h1>Manasseh Mmadu</h1>
-  </body>
-</html>
+<BaseLayout>
+  <section class="section wrap">
+    <h1>{site.name}</h1>
+    <p>{site.title}</p>
+  </section>
+</BaseLayout>

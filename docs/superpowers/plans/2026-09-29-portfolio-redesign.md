@@ -1028,7 +1028,7 @@ Expected: FAIL. `contrast.test.ts` fails with `ENOENT` for `tokens.css`; `theme-
 
   --wrap: 1080px;
   --gutter: 28px;
-  --measure: 70ch;
+  --measure: 40rem;
 }
 
 @media (max-width: 720px) {

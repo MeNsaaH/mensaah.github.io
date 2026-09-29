@@ -11,10 +11,19 @@ import { roles } from '../data/experience';
 import { projects } from '../data/projects';
 import { sectionNumber, site } from '../data/site';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { loadPosts, postHref } from '../lib/blog';
+import { readingTime } from '../lib/reading-time';
+
+const [newest] = await loadPosts();
+const latest = newest && {
+  title: newest.data.title,
+  href: postHref(newest),
+  minutes: readingTime(newest.body),
+};
 ---
 
 <BaseLayout>
-  <Hero />
+  <Hero latest={latest} />
 
   <section id="about" class="section wrap" aria-labelledby="about-title">
     <SectionHeading id="about-title" number={sectionNumber('about')} title="About" />

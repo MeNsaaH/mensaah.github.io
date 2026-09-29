@@ -1,0 +1,42 @@
+---
+import PostRow from '../../../components/PostRow.astro';
+import SectionHeading from '../../../components/SectionHeading.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { loadPosts, type Post } from '../../../lib/blog';
+import { groupByTag, postNumber } from '../../../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = await loadPosts();
+  return groupByTag(posts).map((group) => ({
+    params: { tag: group.slug },
+    props: { label: group.label, tagged: group.posts, posts },
+  }));
+}
+
+interface Props {
+  label: string;
+  /** Posts carrying this tag, newest first. */
+  tagged: Post[];
+  /** Every post, so rows keep their site-wide numbers. */
+  posts: Post[];
+}
+
+const { label, tagged, posts } = Astro.props;
+const count = tagged.length === 1 ? '1 entry' : `${tagged.length} entries`;
+---
+
+<BaseLayout title={`Posts tagged ${label}`} description={`Field notes tagged ${label}.`}>
+  <section class="section wrap" aria-labelledby="tag-title">
+    <SectionHeading id="tag-title" level={1} title={label} note={`Tag / ${count}`} />
+    <ol reversed>
+      {tagged.map((post) => <PostRow post={post} number={postNumber(posts, post.id)} />)}
+    </ol>
+    <p class="back label"><a href="/blog/">All posts</a></p>
+  </section>
+</BaseLayout>
+
+<style>
+  .back {
+    margin-top: 24px;
+  }
+</style>

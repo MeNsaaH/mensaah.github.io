@@ -15,6 +15,14 @@ test('the About section shows the portrait as a captioned figure', async ({ page
   expect(await portrait.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBeGreaterThan(0);
 });
 
+test('the bio is told as the manual entry for the unit', async ({ page }) => {
+  await page.goto(`${ORIGIN}/`);
+  const paragraphs = page.locator('#about .about p');
+  await expect(paragraphs).toHaveCount(3);
+  await expect(paragraphs.first()).toContainText('Unit MM-01');
+  await expect(paragraphs.last()).toContainText('Known issue');
+});
+
 test('the portrait is served from this site, not a third party', async ({ page }) => {
   await page.goto(`${ORIGIN}/`);
   const source = await page

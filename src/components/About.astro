@@ -5,7 +5,9 @@ import { site } from '../data/site';
 ---
 
 <div class="about-row">
-  <p class="about">{site.about}</p>
+  <div class="about">
+    {site.about.map((paragraph) => <p>{paragraph}</p>)}
+  </div>
 
   <figure class="operator">
     <div class="frame">
@@ -33,6 +35,8 @@ import { site } from '../data/site';
   }
 
   .about {
+    display: grid;
+    gap: 16px;
     font-size: 1.125rem;
   }
 

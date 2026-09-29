@@ -15,8 +15,12 @@ export const site = {
   resumeUrl:
     'https://docs.google.com/document/d/1m91RFBEX4rAiwB0F62iSgktYYPrA6Y1wNjrOEr9xJ5M/export?format=pdf',
   formAction: 'https://formspree.io/mrgedawv',
-  about:
-    'Senior SRE designing multi-cloud Kubernetes platforms and developer-first infrastructure. My work has cut operational toil and saved over $400k a year in cloud costs. I build with Terraform, Argo CD, Go and Python so teams can ship reliably and iterate faster.',
+  /** One string per paragraph. */
+  about: [
+    'Unit MM-01 was assembled at the Federal University of Technology, Minna, from a Computer Engineering degree and an unhealthy interest in why servers fall over.',
+    'Early versions wrote Django. Later versions were upgraded to Kubernetes, Terraform and Go and deployed to Zapier. The current version leads zero-downtime migrations, sets the reliability standards other teams build on, and mentors newer units.',
+    'Known issue: could spend five hours investigating a minor performance bug. No fix planned.',
+  ],
   blogTitle: 'Field notes',
   blogDescription:
     'Field notes on reliability, infrastructure and open source by Manasseh Mmadu.',

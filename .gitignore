@@ -4,3 +4,8 @@ dist/
 .superpowers/
 .playwright-mcp/
 .DS_Store
+
+# .claude is ignored by the user-level git config. Track only the project skills.
+!.claude/
+.claude/*
+!.claude/skills/

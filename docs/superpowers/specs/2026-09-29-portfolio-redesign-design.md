@@ -104,7 +104,7 @@ Fonts are self-hosted through `@fontsource` packages. No Google Fonts request.
 2. **About.** A short bio told as the manual entry for Unit MM-01, in up
    to three paragraphs and 600 characters, with the owner's portrait beside it as a framed
    figure captioned "Fig. 2 / Operator". The portrait is stored in the
-   repository (`src/assets/portrait.png`), not loaded from a third party, and
+   repository (`src/assets/portrait.jpg`), not loaded from a third party, and
    sits under the text below 900px.
 3. **Deploys.** Experience as a release log, newest first. Each role is one
    entry with a version, a status, dates, company, role and its bullets.

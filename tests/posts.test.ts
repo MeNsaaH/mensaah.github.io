@@ -51,7 +51,17 @@ describe('tagSlug', () => {
   it('lowercases and replaces spaces and symbols', () => {
     expect(tagSlug('Site Reliability')).toBe('site-reliability');
     expect(tagSlug('  CI/CD ')).toBe('ci-cd');
-    expect(tagSlug('C++')).toBe('c');
+    expect(tagSlug('Node.js')).toBe('node-js');
+  });
+
+  it('keeps tags apart when only a symbol tells them apart', () => {
+    expect(tagSlug('C++')).toBe('c-plus-plus');
+    expect(tagSlug('C#')).toBe('c-sharp');
+    expect(tagSlug('c')).toBe('c');
+  });
+
+  it('keeps the letters of accented words', () => {
+    expect(tagSlug('Café')).toBe('cafe');
   });
 
   it('is empty when nothing usable is left', () => {
@@ -81,6 +91,18 @@ describe('groupByTag', () => {
     expect(groups.map((g) => [g.slug, g.label, g.posts.map((p) => p.id)])).toEqual([
       ['go', 'Go', ['b']],
       ['k8s', 'K8s', ['a', 'b']],
+    ]);
+  });
+
+  it('gives C++, C# and c a page each', () => {
+    const groups = groupByTag([
+      post('a', '2026-01-02', { tags: ['C++', 'C#'] }),
+      post('b', '2026-01-01', { tags: ['c'] }),
+    ]);
+    expect(groups.map((g) => [g.slug, g.posts.map((p) => p.id)])).toEqual([
+      ['c', ['b']],
+      ['c-plus-plus', ['a']],
+      ['c-sharp', ['a']],
     ]);
   });
 

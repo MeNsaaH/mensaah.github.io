@@ -19,9 +19,18 @@ export function publishedPosts<T extends PostLike>(posts: T[], includeDrafts: bo
     );
 }
 
-/** 'Site Reliability' becomes 'site-reliability'. Empty if nothing usable is left. */
+/**
+ * 'Site Reliability' becomes 'site-reliability'. Symbols that tell tags apart
+ * are spelled out, so 'C++', 'C#' and 'c' stay separate, and accents are
+ * dropped rather than the letter ('Café' becomes 'cafe').
+ * Empty if nothing usable is left.
+ */
 export function tagSlug(tag: string): string {
   return tag
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/\+/g, ' plus ')
+    .replace(/#/g, ' sharp ')
     .trim()
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')

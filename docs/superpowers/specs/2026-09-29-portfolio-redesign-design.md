@@ -437,6 +437,9 @@ Creates a post and confirms every place it should appear.
 - **Skills:** each skill is exercised once on a scratch branch (a sample role,
   a sample post), the result is checked in the browser, and the scratch
   changes are discarded.
+- **Browser (Playwright, `npm run test:e2e`):** builds the site from fixture
+  posts, one with a long unbroken name in its title, and fails if any page
+  scrolls sideways at 375px or 320px. Runs in the pipeline.
 - **Build:** `astro check` and `astro build` pass with no errors.
 - **Browser, against the built site:** every route in light and dark mode at
   1280px and 375px; theme toggle persists across reload; palette opens, filters

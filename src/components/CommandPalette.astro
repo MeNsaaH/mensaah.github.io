@@ -123,6 +123,11 @@ const json = JSON.stringify(index).replace(/</g, '\\u003c');
     cursor: pointer;
   }
 
+  .palette-list li > span:first-child {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
   .palette-list li[aria-selected='true'] {
     background: var(--ink);
     color: var(--paper);

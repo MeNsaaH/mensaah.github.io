@@ -11,6 +11,7 @@ Requires Node 22.12 or newer.
 npm install
 npm run dev       # http://localhost:4321, drafts visible
 npm test          # unit tests
+npm run test:e2e  # browser tests at phone width, against fixture posts
 npm run check     # type check
 npm run build     # production build into dist/
 npm run preview   # serve the production build
@@ -54,6 +55,10 @@ The current role is the entry in `experience.ts` without an `end`. There can
 only be one; a test enforces it. In Claude Code, the `add-role` skill adds a
 role and updates everything that depends on it.
 
+The browser tests need Chromium once: `npx playwright install chromium`.
+They build the site from the posts in `e2e/fixtures/blog`, which include a
+title with a long unbroken name, and fail if any page scrolls sideways.
+
 `tests/content.test.ts` keeps the page brief (for example, at most six
 one-line bullets per role) and fails if a phone number, email address or
 postcode is added to the content.
@@ -62,8 +67,9 @@ postcode is added to the content.
 
 `.github/workflows/deploy.yml` tests and builds every push to `master` and
 every pull request, and deploys pushes to `master`. The repository's Pages
-source must be set to "GitHub Actions" (Settings, Pages). The custom domain
-comes from `public/CNAME`.
+source must be set to "GitHub Actions" (Settings, Pages). With that source,
+GitHub takes the custom domain from the same settings page, not from
+`public/CNAME`; the file is kept so the domain is recorded in the repository.
 
 Pushing a newer commit cancels the test and build jobs of the older run, so
 no runner time is spent on a commit that is already out of date. A deployment

@@ -38,8 +38,10 @@ and tell them to confirm it.
    grep -h "^tags:" src/content/blog/*.md | sort | uniq -c
    ```
 
-   Tags that differ only by case or spacing share one page, and the first
-   spelling wins, so match the existing spelling.
+   Tags that differ only by case, spacing or accents share one page, and
+   the first spelling wins, so match the existing spelling. `C++`, `C#` and
+   `c` are three different tags. A tag with no letters or numbers, such as
+   `???`, fails the build.
 
 ## 3. Create the file
 
@@ -63,7 +65,7 @@ Opening paragraph.
 |---|---|---|
 | `title` | yes | Quote it if it contains a colon |
 | `description` | yes | |
-| `pubDate` | yes | Today, as `YYYY-MM-DD`, unless the owner gives a date |
+| `pubDate` | yes | Today, as `YYYY-MM-DD`, unless the owner gives a date. A blank or differently written date fails the build |
 | `updatedDate` | no | Set when revising a published post |
 | `tags` | no | Defaults to none |
 | `draft` | no | Defaults to `false` |
@@ -96,9 +98,12 @@ Every image needs alt text that says what it shows.
 npm test
 npm run check
 npm run build
+npm run test:e2e
 ```
 
 A missing or mistyped field fails the build and names the file and field.
+`npm run test:e2e` checks the layout at phone width using fixture posts, not
+the new post, so also do the manual check at the end of this step.
 
 Then check where the post appears. For a published post, all of these:
 

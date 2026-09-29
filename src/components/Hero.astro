@@ -104,7 +104,7 @@ const revision = `${now.getUTCFullYear()}.${String(now.getUTCMonth() + 1).padSta
 
   .latest {
     display: grid;
-    grid-template-columns: 46px 120px 1fr auto;
+    grid-template-columns: 46px 120px minmax(0, 1fr) auto;
     align-items: baseline;
     gap: 10px;
     margin-top: 14px;
@@ -114,6 +114,10 @@ const revision = `${now.getUTCFullYear()}.${String(now.getUTCMonth() + 1).padSta
     font-family: var(--font-mono);
     font-size: 0.8125rem;
     text-decoration: none;
+  }
+
+  .latest .title {
+    overflow-wrap: anywhere;
   }
 
   .latest:hover .title {
@@ -138,7 +142,7 @@ const revision = `${now.getUTCFullYear()}.${String(now.getUTCMonth() + 1).padSta
     }
 
     .latest {
-      grid-template-columns: 34px 1fr auto;
+      grid-template-columns: 34px minmax(0, 1fr) auto;
     }
 
     .latest .kind {

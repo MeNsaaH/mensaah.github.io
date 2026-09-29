@@ -63,6 +63,8 @@ const tags = uniqueTags(post.data.tags);
     font-weight: 600;
     line-height: 1.25;
     text-decoration: none;
+    /* A title may hold a long name with no spaces, such as a metric. */
+    overflow-wrap: anywhere;
   }
 
   .title:hover {
@@ -92,6 +94,7 @@ const tags = uniqueTags(post.data.tags);
   }
 
   .description {
+    overflow-wrap: anywhere;
     margin-top: 4px;
     color: var(--muted);
     font-size: 0.9375rem;

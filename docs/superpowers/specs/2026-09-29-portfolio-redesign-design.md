@@ -101,7 +101,11 @@ Fonts are self-hosted through `@fontsource` packages. No Google Fonts request.
    - Orchestration: `K8s, Terraform`.
    Under the panel, one row linking to the latest post. The row is omitted
    when there are no published posts.
-2. **About.** Existing bio text.
+2. **About.** A short bio told as the manual entry for Unit MM-01, in up
+   to three paragraphs and 600 characters, with the owner's portrait beside it as a framed
+   figure captioned "Fig. 2 / Operator". The portrait is stored in the
+   repository (`src/assets/portrait.png`), not loaded from a third party, and
+   sits under the text below 900px.
 3. **Deploys.** Experience as a release log, newest first. Each role is one
    entry with a version, a status, dates, company, role and its bullets.
 
@@ -139,7 +143,7 @@ Added on 2026-09-29 at the owner's request, and superseding the earlier rule
 that content is copied from the old site unchanged. The owner's resume is the
 source for roles, dates, skills and certifications.
 
-- Copy is brief: an about paragraph of at most 320 characters, at most six
+- Copy is brief: a bio of at most three paragraphs and 600 characters, at most six
   one-line bullets per role, and one sentence per project.
 - The Education section also lists certifications, by name.
 - Skills follow the resume: Languages, Tools, Cloud platforms.

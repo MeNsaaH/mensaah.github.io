@@ -1,4 +1,5 @@
 ---
+import About from '../components/About.astro';
 import DeployLog from '../components/DeployLog.astro';
 import Education from '../components/Education.astro';
 import Hero from '../components/Hero.astro';
@@ -9,7 +10,7 @@ import SectionHeading from '../components/SectionHeading.astro';
 import SpecTable from '../components/SpecTable.astro';
 import { roles } from '../data/experience';
 import { projects } from '../data/projects';
-import { sectionNumber, site } from '../data/site';
+import { sectionNumber } from '../data/site';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { loadPosts, postHref } from '../lib/blog';
 import { readingTime } from '../lib/reading-time';
@@ -27,7 +28,7 @@ const latest = newest && {
 
   <section id="about" class="section wrap" aria-labelledby="about-title">
     <SectionHeading id="about-title" number={sectionNumber('about')} title="About" />
-    <p class="about">{site.about}</p>
+    <About />
   </section>
 
   <section id="deploys" class="section wrap" aria-labelledby="deploys-title">
@@ -75,10 +76,3 @@ const latest = newest && {
     <SayHi />
   </section>
 </BaseLayout>
-
-<style>
-  .about {
-    max-width: var(--measure);
-    font-size: 1.125rem;
-  }
-</style>

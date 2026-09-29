@@ -1,0 +1,95 @@
+---
+import { Image } from 'astro:assets';
+import portrait from '../assets/portrait.png';
+import { site } from '../data/site';
+---
+
+<div class="about-row">
+  <div class="about">
+    {site.about.map((paragraph) => <p>{paragraph}</p>)}
+  </div>
+
+  <figure class="operator">
+    <div class="frame">
+      <Image
+        src={portrait}
+        alt={`Portrait of ${site.name}`}
+        width={560}
+        height={560}
+        widths={[280, 560]}
+        sizes="280px"
+        loading="lazy"
+      />
+    </div>
+    <figcaption class="label">Fig. 2 / Operator</figcaption>
+  </figure>
+</div>
+
+<style>
+  .about-row {
+    display: grid;
+    grid-template-columns: minmax(0, var(--measure)) 280px;
+    justify-content: space-between;
+    align-items: start;
+    gap: 40px;
+  }
+
+  .about {
+    display: grid;
+    gap: 16px;
+    font-size: 1.125rem;
+  }
+
+  .operator {
+    display: grid;
+    gap: 6px;
+  }
+
+  /* Corner marks, as on a technical drawing. */
+  .frame {
+    position: relative;
+    padding: 8px;
+    border: 2px solid var(--ink);
+    background: var(--panel);
+  }
+
+  .frame::before,
+  .frame::after {
+    content: '';
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border: 2px solid var(--accent);
+  }
+
+  .frame::before {
+    top: -6px;
+    left: -6px;
+    border-right: 0;
+    border-bottom: 0;
+  }
+
+  .frame::after {
+    right: -6px;
+    bottom: -6px;
+    border-left: 0;
+    border-top: 0;
+  }
+
+  .frame img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+
+  @media (max-width: 900px) {
+    .about-row {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 28px;
+    }
+
+    .operator {
+      width: min(100%, 280px);
+    }
+  }
+</style>

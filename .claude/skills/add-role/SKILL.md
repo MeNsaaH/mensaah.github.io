@@ -66,7 +66,7 @@ Ask the owner each question. Change only what they confirm.
 |---|---|
 | Should the hero title or one-line summary change? | `src/data/site.ts`: `title`, `summary`, `description` |
 | Do the Runtime and Orchestration cells still reflect the stack? | `src/data/site.ts`: `runtime`, `orchestration` |
-| Does the About paragraph mention the old role? | `src/data/site.ts`: `about` |
+| Does the bio mention the old employer or role? It is written in a playful voice, as the manual entry for "Unit MM-01", so keep that voice and let the owner approve the wording | `src/data/site.ts`: `about` (one string per paragraph) |
 | Does the role add tools or languages? | `src/data/skills.ts` |
 | Is the resume document up to date? | The owner edits the Google Doc; `resumeUrl` only changes if the document is replaced |
 

@@ -7,7 +7,8 @@ import { hobbies, skills } from '../src/data/skills';
 
 /** Limits that keep the page brief. Raise one only on purpose. */
 const LIMITS = {
-  aboutCharacters: 320,
+  aboutParagraphs: 3,
+  aboutCharacters: 600,
   summaryCharacters: 90,
   bulletsPerRole: 6,
   bulletCharacters: 160,
@@ -17,8 +18,14 @@ const LIMITS = {
 };
 
 describe('content stays brief', () => {
-  it('keeps the about paragraph and hero summary short', () => {
-    expect(site.about.length).toBeLessThanOrEqual(LIMITS.aboutCharacters);
+  it('keeps the bio to a few short paragraphs', () => {
+    expect(Array.isArray(site.about)).toBe(true);
+    expect(site.about.length).toBeGreaterThan(0);
+    expect(site.about.length).toBeLessThanOrEqual(LIMITS.aboutParagraphs);
+    expect(site.about.join(' ').length).toBeLessThanOrEqual(LIMITS.aboutCharacters);
+  });
+
+  it('keeps the hero summary short', () => {
     expect(site.summary.length).toBeLessThanOrEqual(LIMITS.summaryCharacters);
   });
 

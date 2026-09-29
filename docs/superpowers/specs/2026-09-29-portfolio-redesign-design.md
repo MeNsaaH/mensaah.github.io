@@ -34,11 +34,19 @@ Defined as CSS custom properties on `:root`, switched by `data-theme` on `<html>
 | `--ink` | `#161616` | `#ece8df` | Text, heavy rules |
 | `--muted` | `#5d584c` | `#9a9484` | Labels, secondary text |
 | `--rule` | `#b9b3a5` | `#3a372e` | Hairline rules |
-| `--accent` | `#e64500` | `#ff6a2b` | Hazard orange: numbers, links, Say hi |
-| `--ok` | `#0a7d4f` | `#4fe3a1` | Status banner, "live" marker |
+| `--accent` | `#e64500` | `#ff6a2b` | Hazard orange at display sizes: surname, numbers, rules |
+| `--accent-text` | `#b83700` | `#ff6a2b` | Orange at body sizes: links |
+| `--accent-strong` | `#c23a00` | `#ff6a2b` | Filled buttons, including Say hi |
+| `--on-accent` | `#ffffff` | `#14130f` | Text on a filled button |
+| `--ok` | `#08683f` | `#4fe3a1` | Status banner, uptime clock |
+| `--ok-bg` | `#dcebe0` | `#0f211a` | Status banner background |
+| `--ok-line` | `#9cc7ae` | `#1f4a3a` | Status banner border |
 
-Text and background pairs must meet WCAG AA contrast. Adjust a token if a
-check fails; do not drop the check.
+Text and background pairs must meet WCAG AA contrast, and
+`tests/contrast.test.ts` enforces it. Adjust a token if the check fails; do
+not drop the check. The mockup's `#e64500` orange and `#0a7d4f` green fell
+short at small sizes in light mode, which is why `--accent-text`,
+`--accent-strong` and a darker `--ok` exist.
 
 ### Type
 
@@ -239,18 +247,25 @@ src/
     education.ts
     projects.ts
     skills.ts              skills and hobbies
-  lib/
-    reading-time.ts        pure function, unit tested
-    uptime.ts              pure duration maths and formatting, unit tested
-    posts.ts               load, filter drafts, sort, group by tag
-  scripts/
+  lib/                     pure functions, unit tested, no page access
+    reading-time.ts
+    uptime.ts              duration maths and formatting
+    dates.ts               month and day formatting
+    posts.ts               filter drafts, sort, tags, neighbours
+    palette.ts             turns typed text into palette results
+    theme-storage.ts       read and write the stored theme safely
+    blog.ts                loads the collection (the one file that uses Astro)
+  scripts/                 browser behaviour, each a small init function
+    main.ts                starts the others
     theme.ts
+    menu.ts                small-screen nav menu
     uptime-ticker.ts
     robot-eyes.ts
     command-palette.ts
   styles/
     tokens.css             colour and type tokens for both themes
     base.css               reset, grid paper, typography
+    prose.css              blog post body and code blocks
   components/              one file per unit below
   layouts/
     BaseLayout.astro       head, meta, top bar, footer, palette
@@ -263,6 +278,7 @@ src/
     blog/[slug].astro
     blog/tags/[tag].astro
   assets/projects/         project images, optimised by Astro
+tests/                     vitest unit tests, one file per lib module
 public/
   CNAME                    mensaah.me
   favicon.ico
@@ -286,6 +302,7 @@ public/
 | `Education` | Education entries | `education.ts` |
 | `ProjectList` | Project entries | `projects.ts` |
 | `SpecTable` | Skills table | `skills.ts` |
+| `Hobbies` | Hobby labels | `skills.ts` |
 | `SayHi` | Contact form | `site.ts` |
 | `PostRow` | One row in a post list | `lib/posts.ts` |
 | `CommandPalette` | Dialog markup and embedded index | `projects.ts`, `lib/posts.ts` |
@@ -301,7 +318,7 @@ maintenance skills below have few places to touch.
 
 | Fact | Stored in | Derived consumers |
 |---|---|---|
-| Current role and company | The entry in `experience.ts` with no end date | Telemetry "Active deployment", palette `whoami`, deploy log status |
+| Current role and company | The entry in `experience.ts` with no end date. Each role has a `shortTitle` (for example `SRE`) for the telemetry cell | Telemetry "Active deployment", palette `whoami`, deploy log status |
 | Hero title and summary | `site.ts` | Hero, page meta description, palette `whoami` |
 | Runtime and orchestration cells | `site.ts` | Telemetry |
 | Posts | Files in `src/content/blog/` | Blog list, tag pages, RSS, sitemap, home latest-post row, palette index, previous/next links |

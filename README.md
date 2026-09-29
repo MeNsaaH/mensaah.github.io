@@ -46,7 +46,7 @@ Content is data, not markup. Edit these files:
 | What | File |
 |---|---|
 | Name, title, summary, about, links | `src/data/site.ts` |
-| Portrait in the About section | `src/assets/portrait.png` (square, at least 560px) |
+| Portrait in the About section | `src/assets/portrait.jpg` (square, at least 560px) |
 | Roles | `src/data/experience.ts` |
 | Education | `src/data/education.ts` |
 | Projects | `src/data/projects.ts` |

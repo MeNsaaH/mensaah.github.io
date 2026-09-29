@@ -101,7 +101,10 @@ Fonts are self-hosted through `@fontsource` packages. No Google Fonts request.
    - Orchestration: `K8s, Terraform`.
    Under the panel, one row linking to the latest post. The row is omitted
    when there are no published posts.
-2. **About.** Existing bio text.
+2. **About.** A short bio, with the owner's portrait beside it as a framed
+   figure captioned "Fig. 2 / Operator". The portrait is stored in the
+   repository (`src/assets/portrait.png`), not loaded from a third party, and
+   sits under the text below 900px.
 3. **Deploys.** Experience as a release log, newest first. Each role is one
    entry with a version, a status, dates, company, role and its bullets.
 

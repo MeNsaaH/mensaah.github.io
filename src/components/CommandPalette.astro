@@ -1,0 +1,147 @@
+---
+import { activeDeployment } from '../data/experience';
+import { projects } from '../data/projects';
+import { sections, site } from '../data/site';
+import { loadPosts, postHref } from '../lib/blog';
+import type { PaletteIndex } from '../lib/palette';
+
+const posts = await loadPosts();
+
+const index: PaletteIndex = {
+  whoami: `${site.name}, ${site.title}. Active deployment: ${activeDeployment()}.`,
+  resumeUrl: site.resumeUrl,
+  sections: sections.map((section) => ({ label: section.label, href: `/#${section.id}` })),
+  projects: projects.map((project) => ({ label: project.name, href: project.links[0].href })),
+  posts: posts.map((post) => ({ label: post.data.title, href: postHref(post) })),
+};
+
+// "<" is escaped so a post title can never close the script element.
+const json = JSON.stringify(index).replace(/</g, '\\u003c');
+---
+
+<dialog class="palette" data-palette aria-label="Command palette">
+  <form class="palette-form" method="dialog" data-palette-form>
+    <label class="palette-prompt">
+      <span aria-hidden="true">&gt;</span>
+      <span class="visually-hidden">Command</span>
+      <input
+        type="text"
+        data-palette-input
+        role="combobox"
+        aria-expanded="true"
+        aria-controls="palette-list"
+        aria-autocomplete="list"
+        autocomplete="off"
+        autocapitalize="off"
+        spellcheck="false"
+        placeholder="Type a command or search. Try help"
+      />
+    </label>
+    <p class="palette-message" data-palette-message role="status" hidden></p>
+    <ul id="palette-list" class="palette-list" role="listbox" aria-label="Results" data-palette-list>
+    </ul>
+    <p class="palette-keys label">Up and down to move / Enter to open / Esc to close</p>
+  </form>
+</dialog>
+
+<script type="application/json" id="palette-index" set:html={json} />
+
+<style is:global>
+  /* Rows are created by command-palette.ts, so these styles cannot be scoped. */
+  .palette {
+    width: min(100% - 32px, 620px);
+    max-height: min(70vh, 560px);
+    margin-top: 12vh;
+    padding: 0;
+    border: 2px solid var(--ink);
+    background: var(--paper);
+    color: var(--ink);
+    overflow: hidden;
+  }
+
+  .palette::backdrop {
+    background: rgb(0 0 0 / 0.55);
+  }
+
+  .palette-form {
+    display: flex;
+    flex-direction: column;
+    max-height: inherit;
+  }
+
+  .palette-prompt {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    border-bottom: 2px solid var(--ink);
+    color: var(--accent);
+    font-family: var(--font-mono);
+  }
+
+  .palette-prompt input {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 1rem;
+  }
+
+  .palette-prompt input::placeholder {
+    color: var(--muted);
+    opacity: 1;
+  }
+
+  .palette-prompt:focus-within {
+    box-shadow: inset 3px 0 0 var(--accent);
+  }
+
+  .palette-message {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--rule);
+    background: var(--panel);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+  }
+
+  .palette-list {
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .palette-list li {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    cursor: pointer;
+  }
+
+  .palette-list li[aria-selected='true'] {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .palette-hint {
+    color: var(--muted);
+    text-align: right;
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .palette-list li[aria-selected='true'] .palette-hint {
+    color: var(--paper);
+  }
+
+  .palette-keys {
+    padding: 8px 16px;
+    background: var(--panel);
+  }
+</style>

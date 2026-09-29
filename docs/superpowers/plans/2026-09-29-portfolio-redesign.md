@@ -4606,8 +4606,8 @@ const json = JSON.stringify(index).replace(/</g, '\\u003c');
   }
 
   .palette-hint {
-    flex-shrink: 0;
     color: var(--muted);
+    text-align: right;
     font-size: 0.6875rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;

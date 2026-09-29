@@ -8,6 +8,7 @@ import '@fontsource/ibm-plex-sans/latin-400-italic.css';
 import '@fontsource/ibm-plex-sans/latin-600.css';
 import '../styles/tokens.css';
 import '../styles/base.css';
+import CommandPalette from '../components/CommandPalette.astro';
 import Footer from '../components/Footer.astro';
 import TopBar from '../components/TopBar.astro';
 import { site } from '../data/site';
@@ -68,6 +69,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).href;
       <slot />
     </main>
     <Footer />
+    <CommandPalette />
     <script>
       import '../scripts/main';
     </script>

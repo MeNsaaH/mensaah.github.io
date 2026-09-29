@@ -107,11 +107,12 @@ Fonts are self-hosted through `@fontsource` packages. No Google Fonts request.
 
    | Version | Status | Company | Role | Dates |
    |---|---|---|---|---|
-   | v3.0 | Active | Zapier | Site Reliability Engineer | July 2022 to present |
-   | v2.0 | Retired | Deimos | DevOps Engineer | April 2020 to July 2022 |
-   | v1.0 | Retired | eHealth4Everyone | Backend Developer (Remote) | June 2018 to July 2019 |
+   | v3.1 | Active | Zapier | Senior Site Reliability Engineer (Remote) | July 2022 to present |
+   | v2.0 | Retired | Deimos | Site Reliability Engineer (Remote) | April 2020 to May 2022 |
+   | v1.0 | Retired | eHealth4Everyone | Backend Engineer (Remote) | May 2018 to July 2019 |
 
-   Zapier has no bullets in the current site, so it shows role and dates only.
+   A promotion at the same company bumps the minor version and is recorded
+   in the entry's `note`. An entry may list `links` to public work.
 4. **Education.** Existing FUT Minna entry.
 5. **Projects.** The six existing projects as numbered entries with image,
    description and links. Reka currently shows Gophie's image; it gets a
@@ -129,8 +130,22 @@ Fonts are self-hosted through `@fontsource` packages. No Google Fonts request.
   "maintaining", "Travis)" to "Travis", "unsed" to "unused".
 - Unclosed and empty `<li>` elements removed.
 - Copyright year is generated, not hard-coded.
-- Hero title changes from "Backend/DevOps Engineer" to "Site Reliability
-  Engineer".
+- Hero title changes from "Backend/DevOps Engineer" to "Senior Site
+  Reliability Engineer".
+
+## Content rules
+
+Added on 2026-09-29 at the owner's request, and superseding the earlier rule
+that content is copied from the old site unchanged. The owner's resume is the
+source for roles, dates, skills and certifications.
+
+- Copy is brief: an about paragraph of at most 320 characters, at most six
+  one-line bullets per role, and one sentence per project.
+- The Education section also lists certifications, by name.
+- Skills follow the resume: Languages, Tools, Cloud platforms.
+- Private details from the resume are never published: no street address,
+  postcode, phone number or email address.
+- `tests/content.test.ts` enforces the limits and the privacy rule.
 
 ## Blog
 
@@ -200,7 +215,7 @@ The site is fully readable with JavaScript disabled.
 
 ### Uptime counter
 
-- Career start is `2018-06-01`, stored in site data.
+- Career start is `2018-05-01`, the month of the first role, stored in site data.
 - Displayed as `8y 3m 27d` with a ticking `HH:MM:SS` beside it.
 - The build renders the value as of build time; the script updates it once a
   second. Without JavaScript the build-time value stays.
@@ -389,8 +404,13 @@ Creates a post and confirms every place it should appear.
 
 ## Deployment
 
-- `.github/workflows/deploy.yml` builds with Astro and deploys with the
-  official GitHub Pages actions on every push to `master`.
+- `.github/workflows/deploy.yml` runs the tests, the type check and the
+  build on every push to `master` and every pull request, and deploys
+  pushes to `master` with the official GitHub Pages actions.
+- A newer commit cancels the test and build jobs of an older run on the same
+  branch (`concurrency` with `cancel-in-progress: true`), so no runner time
+  is spent on an outdated commit. A deployment that has started is never
+  cancelled (`cancel-in-progress: false`); the newer one waits for it.
 - `site` is `https://mensaah.me`. `public/CNAME` keeps the custom domain.
 - All work happens on the `redesign` branch. The live site does not change
   until the branch is merged.

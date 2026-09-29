@@ -20,8 +20,10 @@ Ask for anything missing. Never invent bullets, dates or titles.
 | Short title | Two words at most, for the telemetry cell, for example "Senior SRE" |
 | Start month | `YYYY-MM` |
 | Current role? | If not, the end month as `YYYY-MM` |
+| Promotion at the same company? | If so, ask whether the owner has separate bullets for the new title. See step 2 |
 | Previous role's end month | Only when the new role is current and another role is still open. Ask; do not assume it equals the new start month |
-| Bullets | What they did. May be empty |
+| Bullets | What they did. At most six, each one line (160 characters). Shorten with the owner, do not drop facts silently |
+| Links | Optional public work from the role, as label and URL |
 
 If the start month is later than the current month, stop and tell the owner:
 the site has no scheduling, so the new role would show as the active
@@ -35,9 +37,14 @@ Ask whether to go ahead now or wait until the start date.
    `end` to the month the owner gave for it in step 1. Leaving it open would
    make two roles current, which the tests reject.
 3. Insert the new role so the array stays sorted newest first by `start`.
-4. Give it the next major version: after `v3.0` comes `v4.0`. A promotion
-   at the same company is still a new entry with a new major version.
-5. Leave `end` out for a current role. Status is derived: no `end` means
+4. Give it the next major version: after `v3.1` comes `v4.0`.
+5. A promotion at the same company, without separate bullets for the new
+   title, is not a new entry. Update the existing entry instead: set the new
+   `title` and `shortTitle`, bump the minor version (`v3.0` becomes `v3.1`),
+   and record the change in `note`, for example
+   `'Joined as SRE. Promoted to Senior SRE in June 2025.'`. Keep `start` as
+   the month they joined the company.
+6. Leave `end` out for a current role. Status is derived: no `end` means
    Active, otherwise Retired.
 
 ```ts
@@ -74,20 +81,23 @@ npm run build
 ```
 
 `tests/experience.test.ts` fails if two roles are current, the order is
-wrong, a version repeats or a date is not `YYYY-MM`. Fix the data, not the
-test.
+wrong, a version repeats or a date is not `YYYY-MM`. `tests/content.test.ts`
+fails if an ended role has no bullets, or any role has more than six or one
+that is too long, and
+if the content contains a phone number, email address or postcode. Fix the
+data, not the test.
 
 Then confirm the result in the built page. Replace the placeholders with the
 new role's values:
 
 ```bash
 grep -o '<Company> / <Short title>' dist/index.html | head -1
-grep -o 'v[0-9]*\.0' dist/index.html | head -4
+grep -o '>v[0-9]*\.[0-9]*<' dist/index.html | head -4
 ```
 
 Expected: the first prints `Company / Short title` (the "Active deployment"
 cell). The second lists the versions in deploy-log order, newest first, for
-example `v4.0 v3.0 v2.0 v1.0` on separate lines.
+example `>v4.0<`, `>v3.1<`, `>v2.0<`, `>v1.0<` on separate lines.
 
 Offer the owner a preview with `npm run dev` (`http://localhost:4321/`).
 
@@ -106,4 +116,5 @@ the owner asks.
 | Adding a `status` field | Status is derived from `end` |
 | Dates like "Feb 2027" | Use `2027-02` |
 | Editing `Telemetry.astro` or `DeployLog.astro` | Edit the data file only |
-| Writing bullets the owner did not give | Leave `bullets: []` and ask |
+| Writing bullets the owner did not give | Ask for them. A role that has just started may have none; an ended role needs at least one |
+| Copying an address or phone number from a resume | Never publish them |

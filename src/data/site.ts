@@ -3,20 +3,20 @@ export const site = {
   firstName: 'Manasseh',
   lastName: 'Mmadu',
   unit: 'MM-01',
-  title: 'Site Reliability Engineer',
-  summary: 'Built for backend systems, infrastructure and open source.',
+  title: 'Senior Site Reliability Engineer',
+  summary: 'Built for multi-cloud Kubernetes platforms, automation and open source.',
   description:
-    'Manasseh Mmadu is a Site Reliability Engineer working on backend systems, infrastructure and open source.',
+    'Manasseh Mmadu is a Senior Site Reliability Engineer building multi-cloud Kubernetes platforms and developer-first infrastructure.',
   url: 'https://mensaah.me',
   /** The uptime counter starts here: the first listed role. */
-  careerStart: '2018-06-01T00:00:00Z',
+  careerStart: '2018-05-01T00:00:00Z',
   runtime: 'Go, Python',
   orchestration: 'K8s, Terraform',
   resumeUrl:
     'https://docs.google.com/document/d/1m91RFBEX4rAiwB0F62iSgktYYPrA6Y1wNjrOEr9xJ5M/export?format=pdf',
   formAction: 'https://formspree.io/mrgedawv',
   about:
-    'I am a dedicated and experienced Computer Engineer specializing in Backend Development and DevOps with a strong passion for open-source projects. With a deep understanding of infrastructure management and a drive for continuous improvement, I strive to optimize systems and automate processes for enhanced efficiency. My diverse skill set, combined with a commitment to staying updated on industry trends, allows me to deliver robust and scalable solutions.',
+    'Senior SRE designing multi-cloud Kubernetes platforms and developer-first infrastructure. My work has cut operational toil and saved over $400k a year in cloud costs. I build with Terraform, Argo CD, Go and Python so teams can ship reliably and iterate faster.',
   blogTitle: 'Field notes',
   blogDescription:
     'Field notes on reliability, infrastructure and open source by Manasseh Mmadu.',

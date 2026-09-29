@@ -4,23 +4,18 @@ export interface SkillGroup {
 }
 
 export const skills: SkillGroup[] = [
-  { label: 'Languages', items: ['JavaScript/Node.js', 'Python', 'Go'] },
-  {
-    label: 'Frameworks and libraries',
-    items: ['Django', 'React', 'Gatsby', 'React Native', 'Gin'],
-  },
+  { label: 'Languages', items: ['Python', 'Go', 'Bash'] },
   {
     label: 'Tools',
     items: [
-      'Git',
       'Kubernetes',
       'Terraform',
       'Ansible',
+      'Argo CD',
+      'Helm',
       'GitLab CI',
       'GitHub Actions',
-      'TeamCity',
       'Azure DevOps',
-      'Travis',
     ],
   },
   { label: 'Cloud platforms', items: ['GCP', 'AWS', 'Azure'] },
@@ -28,9 +23,9 @@ export const skills: SkillGroup[] = [
 
 export const hobbies: string[] = [
   'Paintballing',
-  'Attending meetups',
+  'Meetups',
   'Movies',
   'Reading',
-  'Gaming (FIFA, PES, adventures, shooting)',
-  'Open source contribution',
+  'Gaming',
+  'Open source',
 ];

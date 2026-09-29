@@ -54,11 +54,20 @@ The current role is the entry in `experience.ts` without an `end`. There can
 only be one; a test enforces it. In Claude Code, the `add-role` skill adds a
 role and updates everything that depends on it.
 
+`tests/content.test.ts` keeps the page brief (for example, at most six
+one-line bullets per role) and fails if a phone number, email address or
+postcode is added to the content.
+
 ## Deployment
 
-`.github/workflows/deploy.yml` tests, builds and deploys on every push to
-`master`. The repository's Pages source must be set to "GitHub Actions"
-(Settings, Pages). The custom domain comes from `public/CNAME`.
+`.github/workflows/deploy.yml` tests and builds every push to `master` and
+every pull request, and deploys pushes to `master`. The repository's Pages
+source must be set to "GitHub Actions" (Settings, Pages). The custom domain
+comes from `public/CNAME`.
+
+Pushing a newer commit cancels the test and build jobs of the older run, so
+no runner time is spent on a commit that is already out of date. A deployment
+that has started is never cancelled; the newer one waits for it to finish.
 
 ## Design
 

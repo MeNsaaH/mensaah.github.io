@@ -21,17 +21,21 @@ export const education: Education[] = [
     start: '2014-01',
     end: '2019-11',
     notes: [
+      { text: 'Graduated with First Class Honours.' },
       {
-        text: 'Had some of the best classmates around, where we learnt concepts of computer architecture, data structures and much more. Even worked on Arduino IoT devices, Raspberry Pi and assembly language as well.',
+        text: 'Member of a research group working on 5G, wireless sensor networks and software-defined networks.',
       },
       {
-        text: 'I was involved in a lot of projects: part of a school research group where we focused on the advancement of SDNs and WSNs.',
-      },
-      { text: 'Graduated with First Class Honors.' },
-      {
-        text: 'I was also part of the founders of a developer community to mentor upcoming developers:',
+        text: 'Co-founded a community that mentors new developers:',
         link: { label: 'FUT Developers Circle', href: 'https://futminna-dev-circle.github.io' },
       },
     ],
   },
+];
+
+export const certifications: string[] = [
+  'Google Cloud Certified Professional Cloud Architect',
+  'Google Cloud Certified Professional DevOps Engineer',
+  'Certified Kubernetes Application Developer (CKAD)',
+  'Linux Kernel Internals and Development (LFD420)',
 ];

@@ -19,12 +19,20 @@ import { formatMonth } from '../lib/dates';
           <div class="body">
             <h3>{role.company}</h3>
             <p class="title">{role.title}</p>
+            {role.note && <p class="note">{role.note}</p>}
             {role.bullets.length > 0 && (
               <ul class="bullets">
                 {role.bullets.map((bullet) => (
                   <li>{bullet}</li>
                 ))}
               </ul>
+            )}
+            {role.links && role.links.length > 0 && (
+              <p class="links">
+                {role.links.map((link) => (
+                  <a href={link.href}>{link.label}</a>
+                ))}
+              </p>
             )}
           </div>
         </li>
@@ -83,8 +91,25 @@ import { formatMonth } from '../lib/dates';
     font-size: 0.8125rem;
   }
 
+  .note {
+    margin-top: 4px;
+    color: var(--muted);
+    font-size: 0.9375rem;
+  }
+
   .bullets {
     margin-top: 16px;
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    margin-top: 14px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
   }
 
   @media (max-width: 720px) {

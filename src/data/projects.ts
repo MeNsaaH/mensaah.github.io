@@ -17,47 +17,47 @@ export interface Project {
 export const projects: Project[] = [
   {
     name: 'Reka',
-    description:
-      'A cloud resource management tool to destroy, stop, resume, or clean up unused resources.',
+    description: 'Cloud resource manager that stops, resumes or cleans up unused resources.',
     links: [{ label: 'View project', href: 'https://github.com/mensaah/reka' }],
   },
   {
     name: 'Dhistance',
     description:
-      'A SaaS application for automating the deployment process of DHIS2 instances on servers. Tasks done involved creating a flexible architecture and database model and implementing them. The application was implemented using Django (Python), where deployment tasks were executed using Ansible, Docker and Celery in the background. I implemented templates using Bootstrap.',
+      'SaaS that automates deploying DHIS2 instances, built with Django, Ansible, Docker and Celery.',
     image: dhistance,
     links: [{ label: 'View project', href: 'https://dhistance.com' }],
   },
   {
     name: 'Datakojo',
-    description:
-      'Datakojo is a platform for conducting online surveys built using Django and Celery for background tasks.',
+    description: 'Online survey platform built with Django and Celery.',
     image: datakojo,
     links: [{ label: 'View project', href: 'https://datakojo.com' }],
   },
   {
     name: 'Signalum',
     description:
-      'A Linux package to detect and analyze existing connections from Wi-Fi and Bluetooth, created using Python. It also comes with a GUI application.',
+      'Linux tool that detects and analyses Wi-Fi and Bluetooth connections, with a desktop app.',
     image: signalum,
     links: [
       { label: 'View project', href: 'https://github.com/bisoncorps/signalum' },
-      { label: 'View desktop application', href: 'https://github.com/bisoncorps/signalum-desktop' },
+      { label: 'Desktop app', href: 'https://github.com/bisoncorps/signalum-desktop' },
     ],
   },
   {
     name: 'Search Engine Parser',
     description:
-      'Package to query popular search engines and scrape for result titles, links and descriptions. Aims to scrape the widest range of search engines.',
+      'Python package that queries popular search engines and returns titles, links and descriptions.',
     image: search,
-    links: [{ label: 'View project', href: 'https://github.com/bisoncorps/search-engine-parser' }],
+    links: [
+      { label: 'View project', href: 'https://github.com/bisoncorps/search-engine-parser' },
+      { label: 'API', href: 'https://github.com/bisoncorps/search-engine-api' },
+    ],
   },
   {
     name: 'Gophie',
-    description:
-      'Gophie is a tool to help you search, stream and download movies from movie sites without going through all the stress of by-passing ads.',
+    description: 'Search, stream and download movies without the ads.',
     image: gophie,
-    links: [{ label: 'View project', href: 'https://github.com/go-phie' }],
+    links: [{ label: 'View project', href: 'https://github.com/bisoncorps/gophie' }],
   },
 ];
 

@@ -9,49 +9,60 @@ export interface Role {
   start: string;
   /** YYYY-MM. Leave out for the current role. */
   end?: string;
+  /** One short line under the title, for example a promotion. */
+  note?: string;
   bullets: string[];
+  /** Public work from the role, shown after the bullets. */
+  links?: { label: string; href: string }[];
 }
 
 /** Newest first. At most one role may have no `end`. */
 export const roles: Role[] = [
   {
-    version: 'v3.0',
+    version: 'v3.1',
     company: 'Zapier',
-    title: 'Site Reliability Engineer',
-    shortTitle: 'SRE',
+    title: 'Senior Site Reliability Engineer (Remote)',
+    shortTitle: 'Senior SRE',
     start: '2022-07',
-    bullets: [],
+    note: 'Joined as SRE. Promoted to Senior SRE in June 2025.',
+    bullets: [
+      'Led the zero-downtime move of the global routing layer from Kubernetes NGINX to a serverless, Envoy-backed stack on CloudFront and Lambda@Edge.',
+      'Built a Kubernetes admission webhook that routes image pulls through an ECR cache, saving $100k a year across 10,000+ services.',
+      'Saved over $300k a year by moving Datadog, S3, ECR and SQS traffic to AWS VPC endpoints.',
+      'Built Kubechecks and tuned Argo CD, giving 5,000+ applications CI checks and faster releases.',
+      'Led zero-downtime upgrades of every Kubernetes cluster.',
+      'Cut support toil by 50% through automation.',
+    ],
+    links: [{ label: 'Kubechecks', href: 'https://github.com/zapier/kubechecks' }],
   },
   {
     version: 'v2.0',
     company: 'Deimos',
-    title: 'DevOps Engineer',
-    shortTitle: 'DevOps',
+    title: 'Site Reliability Engineer (Remote)',
+    shortTitle: 'SRE',
     start: '2020-04',
-    end: '2022-07',
+    end: '2022-05',
     bullets: [
-      'Creating and maintaining infrastructure on AWS, GCP and Azure.',
-      'Using Terraform to automate infrastructure creation.',
-      'Setting up and maintaining Kubernetes clusters on cloud providers, and clusters deployed using Kops and kubeadm.',
-      'Monitoring Kubernetes clusters using Elastic Stack and Prometheus.',
-      'Deploying applications on Kubernetes (ExternalDNS, Elastic Stack, Prometheus and others) using Helm, Kustomize or Argo CD.',
-      'Setting up pipelines (Azure, GitLab) to run jobs.',
+      'Automated provisioning across AWS, GCP and Azure with Terraform and Ansible.',
+      'Bootstrapped and upgraded Kubernetes clusters with Kops and kubeadm, secured with OpenID login and RBAC.',
+      'Introduced GitOps with Argo CD, and automated DNS and certificates with ExternalDNS and cert-manager.',
+      'Set up monitoring with Elastic Stack and Prometheus.',
+      'Mentored four SRE interns. All four were promoted within 12 months.',
     ],
+    links: [{ label: 'Open-source Terraform modules', href: 'https://github.com/deimoscloud' }],
   },
   {
     version: 'v1.0',
     company: 'eHealth4Everyone',
-    title: 'Backend Developer (Remote)',
+    title: 'Backend Engineer (Remote)',
     shortTitle: 'Backend',
-    start: '2018-06',
+    start: '2018-05',
     end: '2019-07',
     bullets: [
-      'Maintenance and improvement of existing Django applications. Maintenance tasks ensured all applications have proper tests and also optimization of Django database queries. Creating background tasks using Celery for long running processes which revolved around executing Ansible scripts for infrastructure setups and generating exports from data files (CSV, JSON, XML) using Python.',
-      'Implementation of mock-ups using Django templates and ensuring template re-usability. Upgrading projects from Django 1.11/Python 2 to Django 2.0/Python 3.',
-      'Orchestrated CI pipeline using GitLab CI to run implemented tests and build projects before deployment.',
-      'Creation and maintenance of existing Django applications. Used Celery task queues with Django to run long running processes and Bootstrap to design templates.',
-      'Creation of SaaS application to autodeploy DHIS2 servers using Ansible to automate infrastructure setup, Docker (Compose) for container orchestration, Celery for executing Ansible scripts, RabbitMQ as message queue for communication between Django and Celery server, caching using Memcached. Tasks also involved design of application mockups using Bootstrap.',
-      'Maintenance of PyQt5 projects which used requests to pull data from API endpoints.',
+      'Built and maintained Django applications, with end-to-end and unit tests across the suite.',
+      'Built a SaaS product that deploys DHIS2 servers automatically, using Ansible, Docker Compose, Celery and RabbitMQ.',
+      'Cut query times with database optimisation and caching.',
+      'Upgraded projects from Django 1.11 and Python 2 to Django 2.0 and Python 3.',
     ],
   },
 ];

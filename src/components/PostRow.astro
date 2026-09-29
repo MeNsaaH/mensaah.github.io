@@ -1,0 +1,122 @@
+---
+import { postHref, tagHref, type Post } from '../lib/blog';
+import { formatDay } from '../lib/dates';
+import { uniqueTags } from '../lib/posts';
+import { readingTime } from '../lib/reading-time';
+
+interface Props {
+  post: Post;
+  /** 1 for the oldest post. */
+  number: number;
+}
+
+const { post, number } = Astro.props;
+const tags = uniqueTags(post.data.tags);
+---
+
+<li class="row">
+  <span class="num" aria-hidden="true">{String(number).padStart(2, '0')}</span>
+  <div class="main">
+    <a class="title" href={postHref(post)}>{post.data.title}</a>
+    {post.data.draft && <span class="tag draft">Draft</span>}
+    {
+      tags.map((tag) => (
+        <a class="tag" href={tagHref(tag.slug)}>
+          {tag.label}
+        </a>
+      ))
+    }
+    <p class="description">{post.data.description}</p>
+  </div>
+  <p class="meta label">
+    <time datetime={post.data.pubDate.toISOString()}>{formatDay(post.data.pubDate)}</time>
+    <span>{readingTime(post.body)} min</span>
+  </p>
+</li>
+
+<style>
+  .row {
+    display: grid;
+    grid-template-columns: 46px 1fr auto;
+    align-items: baseline;
+    gap: 10px;
+    padding-block: 14px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .num {
+    color: var(--accent);
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 700;
+  }
+
+  .main {
+    min-width: 0;
+  }
+
+  .title {
+    margin-right: 8px;
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.25;
+    text-decoration: none;
+    /* A title may hold a long name with no spaces, such as a metric. */
+    overflow-wrap: anywhere;
+  }
+
+  .title:hover {
+    color: var(--accent-text);
+    text-decoration: underline;
+  }
+
+  .tag {
+    display: inline-block;
+    margin-right: 4px;
+    padding: 0 6px;
+    border: 1px solid var(--rule);
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    text-decoration: none;
+  }
+
+  a.tag:hover {
+    border-color: var(--ink);
+    color: var(--ink);
+  }
+
+  .draft {
+    border-color: var(--accent-text);
+    color: var(--accent-text);
+  }
+
+  .description {
+    overflow-wrap: anywhere;
+    margin-top: 4px;
+    color: var(--muted);
+    font-size: 0.9375rem;
+  }
+
+  .meta {
+    display: grid;
+    justify-items: end;
+    gap: 2px;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 720px) {
+    .row {
+      grid-template-columns: 34px 1fr;
+    }
+
+    .meta {
+      grid-column: 2;
+      grid-auto-flow: column;
+      justify-content: start;
+      gap: 12px;
+    }
+  }
+</style>

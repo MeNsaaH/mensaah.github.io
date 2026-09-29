@@ -1,0 +1,133 @@
+/* Markdown output has no Astro scope attributes, so post styles are global under .prose. */
+
+.prose {
+  max-width: var(--measure);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  overflow-wrap: break-word;
+}
+
+.prose > * + * {
+  margin-top: 1.15em;
+}
+
+.prose h2,
+.prose h3,
+.prose h4 {
+  margin-top: 1.9em;
+  scroll-margin-top: 84px;
+}
+
+.prose h2 {
+  font-size: 1.625rem;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.prose h3 {
+  font-size: 1.25rem;
+}
+
+.prose h4 {
+  font-size: 1.0625rem;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.4em;
+}
+
+.prose ul {
+  list-style: square;
+}
+
+.prose ol {
+  list-style: decimal;
+}
+
+.prose li + li {
+  margin-top: 0.4em;
+}
+
+.prose li::marker {
+  color: var(--accent-text);
+}
+
+.prose blockquote {
+  margin-inline: 0;
+  padding: 4px 0 4px 18px;
+  border-left: 3px solid var(--ink);
+  color: var(--muted);
+}
+
+.prose hr {
+  border: 0;
+  border-top: 2px solid var(--ink);
+  margin-block: 2em;
+}
+
+.prose img {
+  border: 1px solid var(--rule);
+  background: var(--panel);
+}
+
+.prose :not(pre) > code {
+  padding: 1px 5px;
+  border: 1px solid var(--rule);
+  background: var(--panel);
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+}
+
+/* Long lines scroll inside the block, never the page. */
+.prose pre {
+  padding: 14px 16px;
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--accent);
+  background-color: var(--panel) !important;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  overflow-x: auto;
+}
+
+.prose table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+
+.prose th,
+.prose td {
+  padding: 8px 12px;
+  border: 1px solid var(--rule);
+  text-align: left;
+}
+
+.prose th {
+  background: var(--panel);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Shiki emits both themes as CSS variables; pick one to match the site theme. */
+.astro-code,
+.astro-code span {
+  color: var(--shiki-light);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .astro-code,
+  :root:not([data-theme='light']) .astro-code span {
+    color: var(--shiki-dark);
+  }
+}
+
+:root[data-theme='dark'] .astro-code,
+:root[data-theme='dark'] .astro-code span {
+  color: var(--shiki-dark);
+}

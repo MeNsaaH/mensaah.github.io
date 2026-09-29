@@ -1,0 +1,190 @@
+---
+import '../styles/prose.css';
+import { postHref, tagHref, type Post } from '../lib/blog';
+import { formatDay } from '../lib/dates';
+import { adjacentPosts, postNumber, uniqueTags } from '../lib/posts';
+import { readingTime } from '../lib/reading-time';
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  post: Post;
+  /** Every post in this build, newest first. */
+  posts: Post[];
+}
+
+const { post, posts } = Astro.props;
+const { newer, older } = adjacentPosts(posts, post.id);
+const number = String(postNumber(posts, post.id)).padStart(2, '0');
+const tags = uniqueTags(post.data.tags);
+---
+
+<BaseLayout title={post.data.title} description={post.data.description} type="article">
+  <article class="post wrap">
+    <header class="head">
+      <ul class="label meta">
+        <li><a href="/blog/">Field note {number}</a></li>
+        <li>
+          <time datetime={post.data.pubDate.toISOString()}>{formatDay(post.data.pubDate)}</time>
+        </li>
+        <li>{readingTime(post.body)} min read</li>
+        {post.data.draft && <li class="draft">Draft</li>}
+      </ul>
+      <h1>{post.data.title}</h1>
+      <p class="description">{post.data.description}</p>
+      {
+        post.data.updatedDate && (
+          <p class="label">
+            Updated{' '}
+            <time datetime={post.data.updatedDate.toISOString()}>
+              {formatDay(post.data.updatedDate)}
+            </time>
+          </p>
+        )
+      }
+    </header>
+
+    <div class="prose">
+      <slot />
+    </div>
+
+    {
+      tags.length > 0 && (
+        <ul class="tags" aria-label="Tags">
+          {tags.map((tag) => (
+            <li>
+              <a href={tagHref(tag.slug)}>{tag.label}</a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+
+    <nav class="adjacent" aria-label="More posts">
+      {
+        older ? (
+          <a href={postHref(older)}>
+            <span class="label">Older</span>
+            {older.data.title}
+          </a>
+        ) : (
+          <span />
+        )
+      }
+      {
+        newer && (
+          <a class="newer" href={postHref(newer)}>
+            <span class="label">Newer</span>
+            {newer.data.title}
+          </a>
+        )
+      }
+    </nav>
+  </article>
+</BaseLayout>
+
+<style>
+  .post {
+    padding-block: 40px 24px;
+  }
+
+  .head {
+    max-width: var(--measure);
+    margin-bottom: 32px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 8px;
+  }
+
+  .meta li + li::before {
+    content: '/';
+    margin-right: 8px;
+  }
+
+  .meta a {
+    color: inherit;
+  }
+
+  h1 {
+    margin-block: 12px;
+    font-size: clamp(1.875rem, 6vw, 2.75rem);
+    overflow-wrap: anywhere;
+  }
+
+  .description {
+    overflow-wrap: anywhere;
+    margin-bottom: 10px;
+    color: var(--muted);
+    font-size: 1.125rem;
+  }
+
+  .draft {
+    color: var(--accent-text);
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    max-width: var(--measure);
+    margin-top: 36px;
+  }
+
+  .tags a {
+    display: block;
+    padding: 2px 10px;
+    border: 1px solid var(--rule);
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-decoration: none;
+  }
+
+  .tags a:hover {
+    border-color: var(--ink);
+    color: var(--ink);
+  }
+
+  .adjacent {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    max-width: var(--measure);
+    margin-top: 28px;
+    padding-top: 18px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .adjacent a {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+    overflow-wrap: anywhere;
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .adjacent a:hover {
+    color: var(--accent-text);
+  }
+
+  .newer {
+    text-align: right;
+  }
+
+  @media (max-width: 720px) {
+    .adjacent {
+      grid-template-columns: 1fr;
+    }
+
+    .newer {
+      text-align: left;
+    }
+  }
+</style>

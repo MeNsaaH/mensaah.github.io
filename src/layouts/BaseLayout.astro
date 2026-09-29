@@ -1,0 +1,77 @@
+---
+import '@fontsource/chakra-petch/latin-600.css';
+import '@fontsource/chakra-petch/latin-700.css';
+import '@fontsource/ibm-plex-mono/latin-400.css';
+import '@fontsource/ibm-plex-mono/latin-500.css';
+import '@fontsource/ibm-plex-sans/latin-400.css';
+import '@fontsource/ibm-plex-sans/latin-400-italic.css';
+import '@fontsource/ibm-plex-sans/latin-600.css';
+import '../styles/tokens.css';
+import '../styles/base.css';
+import CommandPalette from '../components/CommandPalette.astro';
+import Footer from '../components/Footer.astro';
+import TopBar from '../components/TopBar.astro';
+import { site } from '../data/site';
+
+interface Props {
+  /** Page title. The site name is added after it. Leave out on the home page. */
+  title?: string;
+  description?: string;
+  type?: 'website' | 'article';
+  /** Keeps a page such as the 404 out of search results. */
+  noindex?: boolean;
+}
+
+const { title, description = site.description, type = 'website', noindex = false } = Astro.props;
+const fullTitle = title ? `${title} | ${site.name}` : `${site.name} | ${site.title}`;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).href;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="alternate" type="application/rss+xml" title={site.blogTitle} href="/rss.xml" />
+
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={site.name} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+
+    {/* Runs before first paint so the stored theme never flashes. Keep in step with theme-storage.ts. */}
+    <script is:inline>
+      (function () {
+        var root = document.documentElement;
+        root.classList.add('js');
+        try {
+          var stored = localStorage.getItem('theme');
+          if (stored === 'light' || stored === 'dark') root.dataset.theme = stored;
+        } catch (error) {
+          /* Storage is blocked: follow the system setting. */
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <TopBar />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <CommandPalette />
+    <script>
+      import '../scripts/main';
+    </script>
+  </body>
+</html>

@@ -1,0 +1,120 @@
+---
+import { Image } from 'astro:assets';
+import { moreProjects, projects } from '../data/projects';
+---
+
+<ol class="grid">
+  {
+    projects.map((project, i) => (
+      <li class="card">
+        <div class="tile">
+          {project.image ? (
+            <Image src={project.image} alt="" width={300} loading="lazy" />
+          ) : (
+            <svg viewBox="0 0 120 80" width="120" height="80" fill="none" aria-hidden="true">
+              <rect class="line" x="1" y="1" width="118" height="78" stroke-dasharray="4 4" />
+              <path class="line" d="M60 24v32M44 40h32" />
+              <circle class="line" cx="60" cy="40" r="10" />
+            </svg>
+          )}
+        </div>
+        <div class="body">
+          <p class="num" aria-hidden="true">
+            {String(i + 1).padStart(2, '0')}
+          </p>
+          <h3>{project.name}</h3>
+          <p class="text">{project.description}</p>
+          <p class="links">
+            {project.links.map((link) => (
+              <a href={link.href}>{link.label}</a>
+            ))}
+          </p>
+        </div>
+      </li>
+    ))
+  }
+</ol>
+
+<p class="more">
+  Check out more on my <a href={moreProjects[0].href}>{moreProjects[0].label}</a> or my{' '}
+  <a href={moreProjects[1].href}>{moreProjects[1].label}</a>.
+</p>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .card {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    min-width: 0;
+    border: 2px solid var(--ink);
+    background: var(--panel);
+  }
+
+  .tile {
+    display: grid;
+    place-items: center;
+    height: 170px;
+    padding: 16px;
+    border-bottom: 1px solid var(--rule);
+    /* Screenshots were made for a white page, so the tile stays white in both themes. */
+    background: #ffffff;
+  }
+
+  .tile img {
+    max-height: 138px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .tile svg .line {
+    stroke: #5d584c;
+  }
+
+  .body {
+    padding: 16px 18px 18px;
+  }
+
+  .num {
+    color: var(--accent);
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  h3 {
+    margin-top: 6px;
+    font-size: 1.375rem;
+  }
+
+  .text {
+    margin-top: 8px;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    margin-top: 14px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .more {
+    margin-top: 24px;
+  }
+
+  @media (max-width: 720px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

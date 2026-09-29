@@ -1,0 +1,61 @@
+---
+import { site } from '../data/site';
+---
+
+<div class="say-hi">
+  <p class="lead">
+    Questions, opportunities or bug reports: send a message and I will reply by email.
+  </p>
+
+  <form class="form" method="POST" action={site.formAction}>
+    <input type="hidden" name="_subject" value="Contact request from personal website" />
+
+    <label class="label" for="say-hi-email">Your email</label>
+    <input id="say-hi-email" type="email" name="_replyto" autocomplete="email" required />
+
+    <label class="label" for="say-hi-message">Your message</label>
+    <textarea id="say-hi-message" name="message" rows="6" required></textarea>
+
+    <button class="button" type="submit">Send message</button>
+  </form>
+</div>
+
+<style>
+  .say-hi {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 32px;
+  }
+
+  .lead {
+    max-width: 38ch;
+    font-size: 1.0625rem;
+  }
+
+  .form {
+    display: grid;
+    gap: 8px;
+    justify-items: start;
+  }
+
+  input[type='email'],
+  textarea {
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 10px 12px;
+    border: 2px solid var(--ink);
+    border-radius: 0;
+    background: var(--panel);
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  @media (max-width: 720px) {
+    .say-hi {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+  }
+</style>

@@ -1,0 +1,23 @@
+---
+import { hobbies } from '../data/skills';
+---
+
+<ul class="hobbies">
+  {hobbies.map((hobby) => <li>{hobby}</li>)}
+</ul>
+
+<style>
+  .hobbies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 10px;
+  }
+
+  li {
+    padding: 4px 12px;
+    border: 1px solid var(--ink);
+    background: var(--panel);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+  }
+</style>

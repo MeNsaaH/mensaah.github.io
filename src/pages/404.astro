@@ -1,0 +1,58 @@
+---
+import Robot from '../components/Robot.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Unit lost" description="This page is not in the manual." noindex>
+  <section class="lost wrap">
+    <div>
+      <p class="label">Error 404</p>
+      <h1>Unit lost</h1>
+      <p class="text">This page is not in the manual. It may have moved, or the link may be wrong.</p>
+      <p class="actions">
+        <a class="button" href="/">Return home</a>
+        <a class="button button-ghost" href="/blog/">Read the blog</a>
+      </p>
+    </div>
+    <Robot figure="FIG. 404" />
+  </section>
+</BaseLayout>
+
+<style>
+  .lost {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 24px;
+    padding-block: 72px;
+  }
+
+  h1 {
+    margin-block: 10px 14px;
+    font-size: clamp(2.5rem, 9vw, 4.5rem);
+    text-transform: uppercase;
+  }
+
+  .text {
+    max-width: 44ch;
+    color: var(--muted);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 22px;
+  }
+
+  @media (max-width: 720px) {
+    .lost {
+      grid-template-columns: 1fr;
+      padding-block: 40px;
+    }
+
+    .lost :global(.robot) {
+      justify-items: start;
+    }
+  }
+</style>

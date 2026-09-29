@@ -1,0 +1,148 @@
+---
+import { site } from '../data/site';
+import Robot from './Robot.astro';
+import Telemetry from './Telemetry.astro';
+
+interface Props {
+  latest?: { title: string; href: string; minutes: number };
+}
+
+const { latest } = Astro.props;
+const now = new Date();
+const revision = `${now.getUTCFullYear()}.${String(now.getUTCMonth() + 1).padStart(2, '0')}`;
+---
+
+<section class="hero wrap" aria-labelledby="hero-name">
+  <p class="masthead label">
+    <span>Service manual / Unit {site.unit}</span>
+    <span class="rev">Rev {revision}</span>
+  </p>
+
+  <div class="intro">
+    <div>
+      <h1 id="hero-name" class="name">
+        {site.firstName}<br /><span>{site.lastName}</span>
+      </h1>
+      <p class="role"><strong>{site.title}.</strong> {site.summary}</p>
+      <p class="actions">
+        <a class="button" href={site.resumeUrl}>Download resume</a>
+        <a class="button button-ghost" href="/#say-hi">Say hi</a>
+      </p>
+    </div>
+    <Robot />
+  </div>
+
+  <Telemetry />
+
+  {
+    latest && (
+      <a class="latest" href={latest.href}>
+        <span class="num">01</span>
+        <span class="label kind">Latest post</span>
+        <span class="title">{latest.title}</span>
+        <span class="label">{latest.minutes} min</span>
+      </a>
+    )
+  }
+</section>
+
+<style>
+  .hero {
+    padding-block: 28px 40px;
+  }
+
+  .masthead {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .rev {
+    padding: 1px 8px;
+    background: var(--accent-strong);
+    color: var(--on-accent);
+  }
+
+  .intro {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 24px;
+    margin-block: 28px 26px;
+  }
+
+  .name {
+    font-size: clamp(2.75rem, 9vw, 4.5rem);
+    line-height: 0.98;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+  }
+
+  .name span {
+    color: var(--accent);
+  }
+
+  .role {
+    max-width: 46ch;
+    margin-top: 16px;
+    color: var(--muted);
+    font-size: 1.0625rem;
+    line-height: 1.55;
+  }
+
+  .role strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 22px;
+  }
+
+  .latest {
+    display: grid;
+    grid-template-columns: 46px 120px 1fr auto;
+    align-items: baseline;
+    gap: 10px;
+    margin-top: 14px;
+    padding-block: 10px;
+    border-bottom: 1px solid var(--rule);
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    text-decoration: none;
+  }
+
+  .latest:hover .title {
+    color: var(--accent-text);
+    text-decoration: underline;
+  }
+
+  .num {
+    color: var(--accent);
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  @media (max-width: 720px) {
+    .intro {
+      grid-template-columns: 1fr;
+    }
+
+    .intro :global(.robot) {
+      justify-items: start;
+    }
+
+    .latest {
+      grid-template-columns: 34px 1fr auto;
+    }
+
+    .latest .kind {
+      display: none;
+    }
+  }
+</style>

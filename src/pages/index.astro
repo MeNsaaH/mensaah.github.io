@@ -1,11 +1,70 @@
 ---
-import { site } from '../data/site';
+import DeployLog from '../components/DeployLog.astro';
+import Education from '../components/Education.astro';
+import Hero from '../components/Hero.astro';
+import Hobbies from '../components/Hobbies.astro';
+import ProjectList from '../components/ProjectList.astro';
+import SayHi from '../components/SayHi.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import SpecTable from '../components/SpecTable.astro';
+import { roles } from '../data/experience';
+import { projects } from '../data/projects';
+import { sectionNumber, site } from '../data/site';
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout>
-  <section class="section wrap">
-    <h1>{site.name}</h1>
-    <p>{site.title}</p>
+  <Hero />
+
+  <section id="about" class="section wrap" aria-labelledby="about-title">
+    <SectionHeading id="about-title" number={sectionNumber('about')} title="About" />
+    <p class="about">{site.about}</p>
+  </section>
+
+  <section id="deploys" class="section wrap" aria-labelledby="deploys-title">
+    <SectionHeading
+      id="deploys-title"
+      number={sectionNumber('deploys')}
+      title="Deploys"
+      note={`Experience / ${roles.length} releases`}
+    />
+    <DeployLog />
+  </section>
+
+  <section id="education" class="section wrap" aria-labelledby="education-title">
+    <SectionHeading id="education-title" number={sectionNumber('education')} title="Education" />
+    <Education />
+  </section>
+
+  <section id="projects" class="section wrap" aria-labelledby="projects-title">
+    <SectionHeading
+      id="projects-title"
+      number={sectionNumber('projects')}
+      title="Projects"
+      note={`${projects.length} entries`}
+    />
+    <ProjectList />
+  </section>
+
+  <section id="skills" class="section wrap" aria-labelledby="skills-title">
+    <SectionHeading id="skills-title" number={sectionNumber('skills')} title="Skills" />
+    <SpecTable />
+  </section>
+
+  <section id="hobbies" class="section wrap" aria-labelledby="hobbies-title">
+    <SectionHeading id="hobbies-title" number={sectionNumber('hobbies')} title="Hobbies" />
+    <Hobbies />
+  </section>
+
+  <section id="say-hi" class="section wrap" aria-labelledby="say-hi-title">
+    <SectionHeading id="say-hi-title" number={sectionNumber('say-hi')} title="Say hi" />
+    <SayHi />
   </section>
 </BaseLayout>
+
+<style>
+  .about {
+    max-width: var(--measure);
+    font-size: 1.125rem;
+  }
+</style>

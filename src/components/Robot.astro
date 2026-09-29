@@ -1,0 +1,87 @@
+---
+import { site } from '../data/site';
+
+interface Props {
+  /** Figure caption, for example 'FIG. 1'. */
+  figure?: string;
+}
+
+const { figure = 'FIG. 1' } = Astro.props;
+---
+
+<figure class="robot">
+  <svg
+    viewBox="0 0 250 170"
+    width="250"
+    height="170"
+    fill="none"
+    stroke-width="1.4"
+    role="img"
+    aria-label={`Schematic drawing of a robot, unit ${site.unit}`}
+    data-robot
+  >
+    <rect class="line fill" x="80" y="30" width="80" height="62" rx="3"></rect>
+    <line class="line" x1="120" y1="12" x2="120" y2="30"></line>
+    <circle class="accent-fill" cx="120" cy="10" r="3.5"></circle>
+
+    <g data-eye>
+      <circle class="line" cx="104" cy="56" r="9" data-socket></circle>
+      <circle class="ink-fill" cx="104" cy="56" r="2.5" data-pupil></circle>
+    </g>
+    <g data-eye>
+      <circle class="line" cx="136" cy="56" r="9" data-socket></circle>
+      <circle class="ink-fill" cx="136" cy="56" r="2.5" data-pupil></circle>
+    </g>
+
+    <path class="line" d="M100 78h40"></path>
+    <rect class="line fill" x="92" y="100" width="56" height="48"></rect>
+    <path class="line" d="M104 112h32M104 122h32M104 132h20"></path>
+    <path class="line" d="M92 108H70v30M148 108h22v30"></path>
+
+    <g class="callout" stroke-width="1">
+      <path d="M145 56h46"></path>
+      <path d="M120 10h50"></path>
+      <path d="M80 124H36"></path>
+    </g>
+    <g class="text" aria-hidden="true">
+      <text x="194" y="59">OPTICS</text>
+      <text x="173" y="13">UPLINK</text>
+      <text x="4" y="127">CORE</text>
+    </g>
+  </svg>
+  <figcaption class="label">{figure} / Unit {site.unit}</figcaption>
+</figure>
+
+<style>
+  .robot {
+    display: grid;
+    justify-items: center;
+    gap: 4px;
+  }
+
+  .line {
+    stroke: var(--ink);
+  }
+
+  .fill {
+    fill: var(--panel);
+  }
+
+  .ink-fill {
+    fill: var(--ink);
+  }
+
+  .accent-fill {
+    fill: var(--accent);
+  }
+
+  .callout {
+    stroke: var(--accent);
+  }
+
+  .text {
+    fill: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 8.5px;
+  }
+</style>

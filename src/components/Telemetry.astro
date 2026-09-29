@@ -1,0 +1,91 @@
+---
+import { activeDeployment } from '../data/experience';
+import { site } from '../data/site';
+import { durationBetween, formatClock, formatDuration } from '../lib/uptime';
+
+// Rendered as of build time; uptime-ticker.ts keeps it current in the browser.
+const uptime = durationBetween(new Date(site.careerStart), new Date());
+---
+
+<dl class="panels">
+  <div class="cell">
+    <dt class="label">Uptime</dt>
+    <dd data-uptime data-start={site.careerStart}>
+      <span data-uptime-days>{formatDuration(uptime)}</span>
+      <span class="clock" data-uptime-clock>{formatClock(uptime)}</span>
+    </dd>
+  </div>
+  <div class="cell">
+    <dt class="label">Active deployment</dt>
+    <dd>{activeDeployment()}</dd>
+  </div>
+  <div class="cell">
+    <dt class="label">Runtime</dt>
+    <dd>{site.runtime}</dd>
+  </div>
+  <div class="cell">
+    <dt class="label">Orchestration</dt>
+    <dd>{site.orchestration}</dd>
+  </div>
+</dl>
+
+<style>
+  .panels {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border: 2px solid var(--ink);
+    background: var(--panel);
+  }
+
+  .cell {
+    min-width: 0;
+    padding: 12px 14px;
+    border-right: 1px solid var(--rule);
+  }
+
+  .cell:last-child {
+    border-right: 0;
+  }
+
+  dd {
+    margin-top: 6px;
+    font-family: var(--font-display);
+    font-size: 1.0625rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  [data-uptime-days] {
+    white-space: nowrap;
+  }
+
+  .clock {
+    display: inline-block;
+    margin-left: 4px;
+    color: var(--ok);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 400;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 720px) {
+    .panels {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .cell:nth-child(2n) {
+      border-right: 0;
+    }
+
+    .cell:nth-child(-n + 2) {
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .clock {
+      display: block;
+      margin-left: 0;
+    }
+  }
+</style>

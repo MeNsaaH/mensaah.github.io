@@ -1,0 +1,103 @@
+---
+import { roles, roleStatus } from '../data/experience';
+import { formatMonth } from '../lib/dates';
+---
+
+<ol class="log" reversed>
+  {
+    roles.map((role) => {
+      const status = roleStatus(role);
+      return (
+        <li class="entry">
+          <div class="meta">
+            <span class="version">{role.version}</span>
+            <span class:list={['status', 'label', { active: status === 'Active' }]}>{status}</span>
+            <span class="label">
+              {formatMonth(role.start)} to {role.end ? formatMonth(role.end) : 'present'}
+            </span>
+          </div>
+          <div class="body">
+            <h3>{role.company}</h3>
+            <p class="title">{role.title}</p>
+            {role.bullets.length > 0 && (
+              <ul class="bullets">
+                {role.bullets.map((bullet) => (
+                  <li>{bullet}</li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </li>
+      );
+    })
+  }
+</ol>
+
+<style>
+  .entry {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 24px;
+    padding-block: 24px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .entry:first-child {
+    padding-top: 0;
+  }
+
+  .meta {
+    display: grid;
+    align-content: start;
+    justify-items: start;
+    gap: 8px;
+  }
+
+  .version {
+    color: var(--accent);
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .status {
+    padding: 2px 8px;
+    border: 1px solid var(--rule);
+  }
+
+  .status.active {
+    border-color: var(--ok-line);
+    background: var(--ok-bg);
+    color: var(--ok);
+  }
+
+  h3 {
+    font-size: 1.5rem;
+  }
+
+  .title {
+    margin-top: 4px;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+  }
+
+  .bullets {
+    margin-top: 16px;
+  }
+
+  @media (max-width: 720px) {
+    .entry {
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .meta {
+      grid-auto-flow: column;
+      justify-content: start;
+      align-items: center;
+      gap: 12px;
+    }
+  }
+</style>

@@ -1,0 +1,49 @@
+---
+interface Props {
+  title: string;
+  /** Two-digit section number, for example '02'. Leave out on pages that are not numbered. */
+  number?: string;
+  /** Small label on the right, for example '3 entries'. */
+  note?: string;
+  /** Heading level. The home page sections are h2; page titles are h1. */
+  level?: 1 | 2;
+  id?: string;
+}
+
+const { title, number, note, level = 2, id } = Astro.props;
+const Tag = `h${level}` as const;
+---
+
+<header class="heading">
+  {number && <span class="num" aria-hidden="true">{number} /</span>}
+  <Tag id={id} class="title">{title}</Tag>
+  {note && <span class="label note">{note}</span>}
+</header>
+
+<style>
+  .heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 14px;
+    margin-bottom: 26px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .num {
+    color: var(--accent);
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 700;
+  }
+
+  .title {
+    font-size: clamp(1.625rem, 4vw, 2.125rem);
+    text-transform: uppercase;
+  }
+
+  .note {
+    margin-left: auto;
+  }
+</style>

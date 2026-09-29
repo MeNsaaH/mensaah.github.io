@@ -1,0 +1,63 @@
+---
+import { education } from '../data/education';
+import { formatMonth } from '../lib/dates';
+---
+
+<ul class="list">
+  {
+    education.map((entry) => (
+      <li class="entry">
+        <p class="label">
+          {formatMonth(entry.start)} to {formatMonth(entry.end)}
+        </p>
+        <div>
+          <h3>{entry.institution}</h3>
+          <p class="degree">{entry.degree}</p>
+          <ul class="bullets">
+            {entry.notes.map((note) => (
+              <li>
+                {note.text}
+                {note.link && (
+                  <>
+                    {' '}
+                    <a href={note.link.href}>{note.link.label}</a>
+                  </>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .entry {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 24px;
+  }
+
+  .entry + .entry {
+    margin-top: 28px;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+  }
+
+  .degree {
+    margin-block: 4px 16px;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+  }
+
+  @media (max-width: 720px) {
+    .entry {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+  }
+</style>

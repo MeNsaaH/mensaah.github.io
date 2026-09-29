@@ -1772,7 +1772,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).href;
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
 
-    <!-- Runs before first paint so the stored theme never flashes. Keep in step with theme-storage.ts. -->
+    {/* Runs before first paint so the stored theme never flashes. Keep in step with theme-storage.ts. */}
     <script is:inline>
       (function () {
         var root = document.documentElement;
@@ -4848,7 +4848,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).href;
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
 
-    <!-- Runs before first paint so the stored theme never flashes. Keep in step with theme-storage.ts. -->
+    {/* Runs before first paint so the stored theme never flashes. Keep in step with theme-storage.ts. */}
     <script is:inline>
       (function () {
         var root = document.documentElement;

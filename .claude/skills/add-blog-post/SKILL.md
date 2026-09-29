@@ -20,6 +20,11 @@ is the only edit needed.
 | Draft? | Drafts show in `npm run dev` only |
 | Content | The owner's notes, outline or full text |
 
+Ask for anything missing. `title` and `description` are required, and the
+description is published, so ask the owner for it rather than writing one
+for them. If they ask you to draft it, build it only from their own words
+and tell them to confirm it.
+
 ## 2. Choose the slug and tags
 
 1. The slug is the file name: the title in lowercase kebab case, without
@@ -67,9 +72,12 @@ Body rules:
 
 - Start headings at `##`. The title is the page's `h1`.
 - Give code blocks a language, for example ` ```bash `.
-- Write from what the owner gave you. If they gave an outline, leave a
-  section skeleton with their points. Do not publish invented experiences,
+- Write from what the owner gave you. Do not publish invented experiences,
   numbers or opinions under their name.
+- If they gave only an outline, write one `##` heading per point and leave
+  the space under each heading empty. Do not add placeholder text, "TODO"
+  notes or HTML comments: all three are published exactly as written. Keep
+  the post as a draft until the owner has written the sections.
 
 ## 4. Images
 
@@ -96,9 +104,24 @@ Then check where the post appears. For a published post, all of these:
 
 ```bash
 ls dist/blog/<slug>/index.html
-grep -c "<slug>" dist/blog/index.html dist/rss.xml dist/index.html
+grep -c "<slug>" dist/blog/index.html dist/rss.xml dist/sitemap-0.xml dist/index.html
 ls dist/blog/tags/
+grep -ci "todo\|<!--" src/content/blog/<slug>.md
 ```
+
+Expected:
+
+- The post page exists.
+- Every count from the second command is at least `1`. `dist/index.html`
+  covers both the "Latest post" row (when this is the newest post) and the
+  command palette, whose list of posts is embedded in every page.
+- `dist/blog/tags/` has one folder per tag in use, including this post's.
+- The last command prints `0`: the post has no placeholder text or
+  comments. A higher count is fine only if the post shows them on purpose
+  inside a code block.
+
+If there is an older or newer post, open the new post's page and confirm the
+"Older" or "Newer" link at the bottom points to it.
 
 For a draft, none of them: `grep -rl "<slug>" dist` prints nothing.
 
@@ -122,3 +145,5 @@ unless the owner asks.
 | New tag `kubernetes` when `k8s` exists | Reuse the existing tag |
 | An `h1` (`#`) in the body | Start at `##` |
 | Images in `public/` | Use `src/assets/blog/<slug>/` |
+| Writing the description for the owner without asking | Ask for it |
+| "TODO" or `<!-- -->` under empty headings | Leave the space empty and keep the post a draft |
